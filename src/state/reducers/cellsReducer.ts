@@ -46,11 +46,23 @@ const reducer = produce((state: CellsState = initialState, action: Action) => {
 
       return state;
     case ActionType.INSERT_CELL_AFTER:
-      const cell: Cell = {
-        content: '',
-        type: action.payload.type,
-        id: randomId(),
-      };
+      let cell: Cell;
+      if (action.payload.type === 'code') {
+        cell = {
+          // eslint-disable-next-line no-template-curly-in-string
+          content: 'var a  = 1;\nvar b = 2;\nshow(`<div>${a+b}</div>`)',
+          type: action.payload.type,
+          id: randomId(),
+        };
+      } else {
+        cell = {
+          // eslint-disable-next-line no-template-curly-in-string
+          content: 'Sample Code<br/> <h6>Use default show function for displaying HTML Content</h6>',
+          type: action.payload.type,
+          id: randomId(),
+        };
+      }
+
 
       state.data[cell.id] = cell;
 
